@@ -6,4 +6,5 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="applicationContext-web.xml"/>
+    <import resource="applicationContext-db.xml"/>
 </beans>

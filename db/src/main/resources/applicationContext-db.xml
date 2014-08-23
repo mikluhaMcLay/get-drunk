@@ -8,5 +8,25 @@
 
     <context:component-scan base-package="org.startup.db"/>
 
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="$jdbc:postgresql://localhost/csdb"/>
+        <property name="username" value="csdba"/>
+        <property name="password" value=""/>
+
+        <property name="initialSize" value="30" />
+        <property name="maxActive" value="30" />
+        <property name="maxIdle" value="30" />
+
+        <property name="maxWait" value="180000" />
+
+    </bean>
+
+    <bean id="namedParamsJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
 
 </beans>
