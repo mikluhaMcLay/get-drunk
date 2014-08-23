@@ -5,4 +5,5 @@
        http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <import resource="applicationContext-web.xml"/>
 </beans>

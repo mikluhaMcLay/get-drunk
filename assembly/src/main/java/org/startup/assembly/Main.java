@@ -15,6 +15,8 @@ public class Main {
         try {
             AbstractApplicationContext applicationContext = new ClassPathXmlApplicationContext( "applicationContext.xml" );
 
+            applicationContext.getBean( "httpServer" );
+
             log.info( "started at {}", new Date() );
         } catch ( Exception e ) {
             log.error( "Error during initializing spring context", e );
