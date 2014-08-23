@@ -18,7 +18,7 @@ public class HttpServer {
     private final static Logger log = LoggerFactory.getLogger( HttpServer.class );
 
     public static final int PORT = 10000;
-    public static final String HOST = "127.0.0.1";
+    public static final String HOST = "alko-battke.herokuapp.com";
 
     private Server server;
     @Autowired
@@ -57,7 +57,7 @@ public class HttpServer {
         AbstractConnector c = new SocketConnector();
         c.setMaxIdleTime( 3600000 );
         c.setSoLingerTime( -1 );
-//        c.setHost( HOST );
+        c.setHost( HOST );
 //        c.setPort( PORT );
 
         return new Connector[]{ c };
