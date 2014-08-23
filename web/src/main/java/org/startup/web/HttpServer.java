@@ -58,7 +58,7 @@ public class HttpServer {
         c.setMaxIdleTime( 3600000 );
         c.setSoLingerTime( -1 );
         c.setHost( HOST );
-        c.setPort( PORT );
+//        c.setPort( PORT );
 
         return new Connector[]{ c };
     }
