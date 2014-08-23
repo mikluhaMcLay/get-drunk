@@ -12,6 +12,7 @@
         <module>assembly</module>
         <module>web</module>
         <module>entity</module>
+        <module>db</module>
     </modules>
 
 
@@ -20,6 +21,7 @@
         <module.log.dir>${basedir}/log</module.log.dir>
 
         <!-- depency soft version -->
+        <dependencies.postgresql.version>9.0-801.jdbc4</dependencies.postgresql.version>
         <soft.version.jetty>8.1.14.v20131031</soft.version.jetty>
         <soft.version.spring>3.2.6.RELEASE</soft.version.spring>
         <soft.version.slf4j>1.7.5</soft.version.slf4j>
@@ -86,6 +88,18 @@
                 <version>${soft.version.spring}</version>
             </dependency>
 
+
+            <!-- databases -->
+            <dependency>
+                <groupId>postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${dependencies.postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-dbcp</groupId>
+                <artifactId>commons-dbcp</artifactId>
+                <version>1.4</version>
+            </dependency>
 
             <!-- jetty (embedded http server) -->
             <dependency>
