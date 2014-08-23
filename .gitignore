@@ -5,4 +5,6 @@
 target
 *.log
 classes
-
+acts
+items
+users
