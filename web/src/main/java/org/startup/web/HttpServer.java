@@ -18,7 +18,7 @@ public class HttpServer {
     private final static Logger log = LoggerFactory.getLogger( HttpServer.class );
 
     public static final int PORT = 10000;
-    public static final String HOST = "10.80.202.18";
+    public static final String HOST = "localhost";
 
     private Server server;
     @Autowired
