@@ -57,7 +57,7 @@ public class HttpServer {
         AbstractConnector c = new SocketConnector();
         c.setMaxIdleTime( 3600000 );
         c.setSoLingerTime( -1 );
-        c.setHost( HOST );
+//        c.setHost( HOST );
 //        c.setPort( PORT );
 
         return new Connector[]{ c };
