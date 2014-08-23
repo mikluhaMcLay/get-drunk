@@ -32,18 +32,11 @@
 
     <servlet>
         <servlet-name>rest.service</servlet-name>
-        <!-- <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class> -->
         <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
-        <!-- <init-param> -->
-        <!-- <param-name>com.sun.jersey.config.property.resourceConfigClass</param-name> -->
-        <!-- <param-value>com.sun.jersey.api.core.PackagesResourceConfig</param-value> -->
-        <!-- </init-param> -->
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
             <!-- Important bit -->
             <param-value>org.startup.web.rest</param-value>
-            <!-- <param-name>com.sun.jersey.config.property.packages</param-name> -->
-            <!-- <param-value>your.package.with.jersey.resources</param-value> -->
         </init-param>
         <init-param>
             <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>

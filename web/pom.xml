@@ -13,6 +13,13 @@
     <artifactId>web</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.startup</groupId>
+            <artifactId>db</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <!-- jetty (embedded http server) -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -128,5 +135,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
     </dependencies>
 </project>
