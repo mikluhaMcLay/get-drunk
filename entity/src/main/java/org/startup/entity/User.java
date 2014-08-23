@@ -2,17 +2,30 @@ package org.startup.entity;
 
 public class User {
     private final String username;
-    private final byte[] photo;
+    private byte[] photo;
+    private final String photoLink;
 
-    public User( String username, byte[] photo ) {
+    public User( String username, String photoLink) {
         this.username = username;
+        this.photoLink = photoLink;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
-    public User( String username ) {
-        this.username = username;
-        photo = new byte[]{ };
+    public String getPhotoLink() {
+        return photoLink;
     }
+//
+//    public User( String username ) {
+//        this.username = username;
+//        photo = new byte[]{ };
+//    }
 
     @Override
     public boolean equals( Object o ) {
