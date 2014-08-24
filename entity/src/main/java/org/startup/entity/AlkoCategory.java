@@ -9,4 +9,12 @@ public enum AlkoCategory {
         this.degree = degree;
     }
 
+    public static AlkoCategory lookup( String name ) {
+        for ( AlkoCategory category : AlkoCategory.values() ) {
+            if ( category.name().equalsIgnoreCase( name ) ) {
+                return category;
+            }
+        }
+        throw new IllegalArgumentException( "There's no item with name " + name );
+    }
 }

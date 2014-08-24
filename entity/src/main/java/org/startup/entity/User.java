@@ -63,10 +63,4 @@ public class User {
     public void setChampValue(int champValue) {
         this.champValue = champValue;
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-
 }
