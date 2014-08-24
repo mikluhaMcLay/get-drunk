@@ -68,6 +68,12 @@ public class UserDao {
                 "  where al.id = ? and (7*24*60*60 > EXTRACT(EPOCH FROM (current_timestamp - a.ts)))", new Object[]{userID}, Long.class);
     }
 
+    public long getDrunkAllTime(long userID) {
+        return jdbcTemplate.queryForObject("select sum(a.volume)\n" +
+                "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
+                "  where al.id = ?", new Object[]{userID}, Long.class);
+    }
+
     public long getFavouriteDrink(long userID) {
         return jdbcTemplate.queryForObject("select a.item, ai.name, count(*) as itemCount\n" +
                 "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
