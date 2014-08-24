@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.startup.entity.User;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Component
 public class UserDao {
@@ -28,11 +29,31 @@ public class UserDao {
     public User getUser( long id ) {
         return jdbcTemplate.queryForObject("select username, photo from alcoholic where id = ?",
                 new Object[]{id},
-                new UserRowMapper());
+                new UserProfileMapper());
     }
 
-    public void saveUser( User user ) {
+    public List<User> getChampions() {
+        return jdbcTemplate.query("SELECT\n" +
+                        "  al.*, sum(a.volume * ai.degree) as champValue\n" +
+                        "FROM alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
+                        "  JOIN alcohol_item ai ON (a.item = ai.id)\n" +
+                        "  group by al.id\n" +
+                        "  order by champValue\n" +
+                        "  limit 3",
+                new ChampionUserMapper());
+    }
 
+    public List<User> getAlcoCoLikers( long alcoID ) {
+        return jdbcTemplate.query("SELECT\n" +
+                        "  al.*,\n" +
+                        "  sum(a.volume) as totalVolume\n" +
+                        "FROM alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
+                        "  where a.item = ?\n" +
+                        "group by al.id\n" +
+                        "ORDER BY totalVolume\n" +
+                        "LIMIT 3;",
+                new Object[]{alcoID},
+                new AlcoCoLikerMapper());
     }
 
 
