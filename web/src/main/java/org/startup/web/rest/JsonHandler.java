@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.startup.db.UserDao;
 import org.startup.db.photo.PhotoException;
 import org.startup.db.photo.PhotoService;
-import org.startup.web.dto.ProfileDto;
+import org.startup.entity.User;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -70,15 +70,18 @@ public class JsonHandler {
     @Path( "/profile" )
     @Produces( MediaType.APPLICATION_JSON )
     public Response getProfile( @QueryParam( "id" ) Integer id ) {
-        ProfileDto profile = new ProfileDto(
-                "goc0g6uh1an2wik9d3l5rtzn2xdges",
-                "Ivan Ivanov",
-                1000,
-                2000,
-                3000,
-                "vodka"
-        );
-        return Response.ok( profile ).build();
+        User user = userDao.getUser( id );
+//        ProfileDto profile = new ProfileDto(
+//                user.getPhotoLink(),
+//                user.getUsername(),
+//                user.get,
+//                2000,
+//                3000,
+//                "vodka"
+//        );
+//
+//        return Response.ok( profile ).build();
+        return Response.ok().build();
     }
 
     @GET

@@ -2,7 +2,6 @@ package org.startup.entity;
 
 public class User {
     private final String username;
-    private byte[] photo;
 
     private final String photoLink;
     private int totalVolume;
@@ -13,22 +12,13 @@ public class User {
         this.photoLink = photoLink;
     }
 
-    public byte[] getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
-    }
-
     public String getPhotoLink() {
         return photoLink;
     }
-//
-//    public User( String username ) {
-//        this.username = username;
-//        photo = new byte[]{ };
-//    }
+
+    public String getUsername() {
+        return username;
+    }
 
     @Override
     public boolean equals( Object o ) {
@@ -51,7 +41,9 @@ public class User {
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
-                ", has photo=" + (photo.length > 0) +
+                ", photoLink='" + photoLink + '\'' +
+                ", totalVolume=" + totalVolume +
+                ", champValue=" + champValue +
                 '}';
     }
 
