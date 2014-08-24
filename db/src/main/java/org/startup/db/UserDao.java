@@ -51,10 +51,29 @@ public class UserDao {
                         "  where a.item = ?\n" +
                         "group by al.id\n" +
                         "ORDER BY totalVolume\n" +
-                        "LIMIT 3;",
+                        "LIMIT 3",
                 new Object[]{alcoID},
                 new AlcoCoLikerMapper());
     }
 
+    public long getDrunkTimes(long userID) {
+        return jdbcTemplate.queryForObject("select count(*) as drunkTimes\n" +
+                        "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
+                        "  where al.id = ?", new Object[]{userID}, Long.class);
+    }
 
+    public long getDrunkThisWeek(long userID) {
+        return jdbcTemplate.queryForObject("select sum(a.volume)\n" +
+                "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
+                "  where al.id = ? and (7*24*60*60 > EXTRACT(EPOCH FROM (current_timestamp - a.ts)))", new Object[]{userID}, Long.class);
+    }
+
+    public long getFavouriteDrink(long userID) {
+        return jdbcTemplate.queryForObject("select a.item, ai.name, count(*) as itemCount\n" +
+                "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
+                "    join alcohol_item ai ON (a.item = ai.id)\n" +
+                "    where al.id = ?\n" +
+                "  group by a.item, ai.name\n" +
+                "  order by itemCount desc limit 1", new Object[]{userID}, Long.class);
+    }
 }
