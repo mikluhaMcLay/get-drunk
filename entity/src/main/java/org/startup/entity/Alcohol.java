@@ -5,7 +5,7 @@ public class Alcohol {
     private final AlkoCategory category;
     private final Brand brand;
 
-    public Alcohol( double degree, String name, AlkoCategory category, Brand brand ) {
+    public Alcohol(String name, AlkoCategory category, Brand brand ) {
         this.name = name;
         this.category = category;
         this.brand = brand;

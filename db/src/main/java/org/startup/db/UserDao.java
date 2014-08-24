@@ -56,30 +56,30 @@ public class UserDao {
                 new AlcoCoLikerMapper());
     }
 
-    public int getDrunkTimes(long userID) {
+    public Integer getDrunkTimes(long userID) {
         return jdbcTemplate.queryForObject("select count(*) as drunkTimes\n" +
                         "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
                         "  where al.id = ?", new Object[]{userID}, Integer.class);
     }
 
-    public int getDrunkThisWeek(long userID) {
+    public Integer getDrunkThisWeek(long userID) {
         return jdbcTemplate.queryForObject("select sum(a.volume)\n" +
                 "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
                 "  where al.id = ? and (7*24*60*60 > EXTRACT(EPOCH FROM (current_timestamp - a.ts)))", new Object[]{userID}, Integer.class);
     }
 
-    public int getDrunkAllTime(long userID) {
+    public Integer getDrunkAllTime(long userID) {
         return jdbcTemplate.queryForObject("select sum(a.volume)\n" +
                 "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
                 "  where al.id = ?", new Object[]{userID}, Integer.class);
     }
 
-    public int getFavouriteDrink(long userID) {
-        return jdbcTemplate.queryForObject("select a.item, ai.name, count(*) as itemCount\n" +
+    public String getFavouriteDrink(long userID) {
+        return jdbcTemplate.queryForObject("ai.name\n" +
                 "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
                 "    join alcohol_item ai ON (a.item = ai.id)\n" +
                 "    where al.id = ?\n" +
                 "  group by a.item, ai.name\n" +
-                "  order by itemCount desc limit 1", new Object[]{userID}, Integer.class);
+                "  order by itemCount desc limit 1", new Object[]{userID}, String.class);
     }
 }
