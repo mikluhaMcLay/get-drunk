@@ -29,6 +29,8 @@ public class ActDao {
         throw new UnsupportedOperationException();
     }
 
+    public void saveAct()
+
     public void saveUser( User user ) {
 
     }
