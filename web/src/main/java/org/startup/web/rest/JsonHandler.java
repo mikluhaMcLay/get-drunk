@@ -53,7 +53,7 @@ public class JsonHandler {
         } catch ( IOException e ) {
             log.error( "Photo wasn't saved: ", e );
         } catch ( PhotoException e ) {
-            log.error( "" );
+            log.error( "Something happened while saving photo: ", e );
         }
 
         return Response.status( status ).entity( "хуйпизда" ).build();
