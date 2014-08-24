@@ -4,6 +4,8 @@ public class User {
     private final String username;
     private byte[] photo;
     private final String photoLink;
+    private int totalVolume;
+    private int champValue;
 
     public User( String username, String photoLink) {
         this.username = username;
@@ -50,5 +52,21 @@ public class User {
                 "username='" + username + '\'' +
                 ", has photo=" + (photo.length > 0) +
                 '}';
+    }
+
+    public int getTotalVolume() {
+        return totalVolume;
+    }
+
+    public void setTotalVolume(int totalVolume) {
+        this.totalVolume = totalVolume;
+    }
+
+    public int getChampValue() {
+        return champValue;
+    }
+
+    public void setChampValue(int champValue) {
+        this.champValue = champValue;
     }
 }

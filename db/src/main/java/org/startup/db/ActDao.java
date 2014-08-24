@@ -25,7 +25,7 @@ public class ActDao {
         log.info( "All right" );
     }
 
-    public User getUser( long id ) {
+    public User getAct( long id ) {
         throw new UnsupportedOperationException();
     }
 
