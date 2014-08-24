@@ -41,7 +41,9 @@ public class JsonHandler {
     @Path("/uploadUserPicture")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response postPhoto(@FormDataParam("file") InputStream uploadedInputStream,
-                          @FormDataParam("file") FormDataContentDisposition fileDetail) {
+                          @FormDataParam("file") FormDataContentDisposition fileDetail,
+                          @FormDataParam("category") FormDataContentDisposition category,
+                          @FormDataParam("amount") FormDataContentDisposition amount) {
         int status = 200;
         try {
             byte[] photo = IOUtils.toByteArray( uploadedInputStream );
@@ -51,10 +53,10 @@ public class JsonHandler {
         } catch ( IOException e ) {
             log.error( "Photo wasn't saved: ", e );
         } catch ( PhotoException e ) {
-            e.printStackTrace();
+            log.error( "" );
         }
 
-        return Response.status( status ).build();
+        return Response.status( status ).entity( "хуйпизда" ).build();
     }
 
 }
