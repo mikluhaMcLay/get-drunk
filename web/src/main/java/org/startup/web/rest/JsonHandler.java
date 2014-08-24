@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.startup.db.UserDao;
 import org.startup.db.photo.PhotoException;
 import org.startup.db.photo.PhotoService;
+import org.startup.web.dto.ProfileDto;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -29,6 +31,8 @@ public class JsonHandler {
 
     @Autowired
     private PhotoService photoService;
+    @Autowired
+    private UserDao userDao;
 
     @GET
     @Path( "/echo" )
@@ -44,8 +48,9 @@ public class JsonHandler {
     public Response postPhoto( @FormDataParam( "file" ) InputStream uploadedInputStream,
                                @FormDataParam( "file" ) FormDataContentDisposition fileDetail,
                                @FormDataParam( "category" ) String category,
-                               @FormDataParam( "amount" ) Integer amount ) {
-
+                               @FormDataParam( "amount" ) Integer amount,
+                               @FormDataParam( "amount_of" ) String amountOf,
+                               @FormDataParam( "title" ) String title ) {
         int status = 200;
         try {
             byte[] photo = IOUtils.toByteArray( uploadedInputStream );
@@ -59,6 +64,21 @@ public class JsonHandler {
         }
 
         return Response.status( status ).entity( "хуйпизда" ).build();
+    }
+
+    @GET
+    @Path( "/profile" )
+    @Produces( MediaType.APPLICATION_JSON )
+    public Response getProfile( @QueryParam( "id" ) Integer id ) {
+        ProfileDto profile = new ProfileDto(
+                "goc0g6uh1an2wik9d3l5rtzn2xdges",
+                "Ivan Ivanov",
+                1000,
+                2000,
+                3000,
+                "vodka"
+        );
+        return Response.ok( profile ).build();
     }
 
     @GET
