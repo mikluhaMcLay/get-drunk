@@ -3,6 +3,7 @@ package org.startup.entity;
 public class User {
     private final String username;
     private byte[] photo;
+
     private final String photoLink;
     private int totalVolume;
     private int champValue;
