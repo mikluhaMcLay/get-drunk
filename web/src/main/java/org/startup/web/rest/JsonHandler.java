@@ -18,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -33,17 +34,18 @@ public class JsonHandler {
     @Path( "/echo" )
     @Produces( MediaType.APPLICATION_JSON )
     @Consumes( MediaType.APPLICATION_JSON )
-    public String echo(@QueryParam( "msg" ) String msg ) {
+    public String echo( @QueryParam( "msg" ) String msg ) {
         return "You said " + msg;
     }
 
     @POST
-    @Path("/uploadUserPicture")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response postPhoto(@FormDataParam("file") InputStream uploadedInputStream,
-                          @FormDataParam("file") FormDataContentDisposition fileDetail,
-                          @FormDataParam("category") FormDataContentDisposition category,
-                          @FormDataParam("amount") FormDataContentDisposition amount) {
+    @Path( "/uploadUserPicture" )
+    @Consumes( MediaType.MULTIPART_FORM_DATA )
+    public Response postPhoto( @FormDataParam( "file" ) InputStream uploadedInputStream,
+                               @FormDataParam( "file" ) FormDataContentDisposition fileDetail,
+                               @FormDataParam( "category" ) String category,
+                               @FormDataParam( "amount" ) Integer amount ) {
+
         int status = 200;
         try {
             byte[] photo = IOUtils.toByteArray( uploadedInputStream );
@@ -57,6 +59,20 @@ public class JsonHandler {
         }
 
         return Response.status( status ).entity( "хуйпизда" ).build();
+    }
+
+    @GET
+    @Path( "/image" )
+    @Produces( "image/jpeg" )
+    public Response getPhoto( @QueryParam( "link" ) String link ) {
+            try {
+                byte[] photo = photoService.getUserPhoto( link );
+                return Response.status( 200 ).header( "Content-Disposition", "attachment; filename=" + link )
+                        .entity( new ByteArrayInputStream( photo ) ).build();
+            } catch ( PhotoException e ) {
+                log.error( "хуйня случилась: ",e );
+                return Response.status( 500 ).build();
+            }
     }
 
 }
