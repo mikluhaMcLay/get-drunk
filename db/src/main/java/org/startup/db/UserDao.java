@@ -74,12 +74,12 @@ public class UserDao {
                 "  where al.id = ?", new Object[]{userID}, Integer.class);
     }
 
-    public Integer getFavouriteDrink(long userID) {
-        return jdbcTemplate.queryForObject("select a.item, ai.name, count(*) as itemCount\n" +
+    public String getFavouriteDrink(long userID) {
+        return jdbcTemplate.queryForObject("ai.name\n" +
                 "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
                 "    join alcohol_item ai ON (a.item = ai.id)\n" +
                 "    where al.id = ?\n" +
                 "  group by a.item, ai.name\n" +
-                "  order by itemCount desc limit 1", new Object[]{userID}, Integer.class);
+                "  order by itemCount desc limit 1", new Object[]{userID}, String.class);
     }
 }
