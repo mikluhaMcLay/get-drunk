@@ -72,15 +72,21 @@ public class PhotoService {
 
     private byte[] getPhoto( String path ) throws PhotoException {
         Path photoPath = Paths.get( path );
-        byte[] data = new byte[0];
+        byte[] data;
         try {
             data = Files.readAllBytes( photoPath );
         } catch ( IOException e ) {
             log.error( "Can't read photo {} cause", path, e );
+            throw new PhotoException( e );
         }
         log.info( "read {} bytes from file {}", data.length, path );
 
         return data;
+    }
+
+    public File getUserPhotoFile( String link ) {
+        File f = new File( USER_DIR + link );
+        return f;
     }
 
     public byte[] getUserPhoto( String link ) throws PhotoException {
