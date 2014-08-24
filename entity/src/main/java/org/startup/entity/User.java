@@ -1,6 +1,7 @@
 package org.startup.entity;
 
 public class User {
+
     private final String username;
     private byte[] photo;
 
@@ -70,4 +71,10 @@ public class User {
     public void setChampValue(int champValue) {
         this.champValue = champValue;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+
 }

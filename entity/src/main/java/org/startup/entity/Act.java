@@ -3,17 +3,25 @@ package org.startup.entity;
 import java.util.Date;
 
 public class Act {
+    private long userID;
     private final Alcohol alcohol;
     private final double volume;
+    private String photoLink;
     private final Date time;
 
     private String comment;
     private double latitude;
     private double longitude;
 
-    public Act( Alcohol alcohol, double volume, Date time ) {
+    public long getUserID() {
+        return userID;
+    }
+
+    public Act(long userID, Alcohol alcohol, double volume, String photoLink, Date time) {
+        this.userID = userID;
         this.alcohol = alcohol;
         this.volume = volume;
+        this.photoLink = photoLink;
         this.time = time;
     }
 
@@ -95,5 +103,9 @@ public class Act {
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 '}';
+    }
+
+    public String getPhotoLink() {
+        return photoLink;
     }
 }

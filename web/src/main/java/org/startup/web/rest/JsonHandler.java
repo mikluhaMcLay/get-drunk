@@ -7,22 +7,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.startup.db.ActDao;
 import org.startup.db.UserDao;
 import org.startup.db.photo.PhotoException;
 import org.startup.db.photo.PhotoService;
+import org.startup.entity.*;
 import org.startup.web.dto.ProfileDto;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 @Component
 @Path( "api" )
@@ -33,6 +31,8 @@ public class JsonHandler {
     private PhotoService photoService;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private ActDao actDao;
 
     @GET
     @Path( "/echo" )
@@ -50,11 +50,14 @@ public class JsonHandler {
                                @FormDataParam( "category" ) String category,
                                @FormDataParam( "amount" ) Integer amount,
                                @FormDataParam( "amount_of" ) String amountOf,
-                               @FormDataParam( "title" ) String title ) {
+                               @FormDataParam( "title" ) String title,
+                               @FormDataParam( "userID" ) Long userID
+                               ) {
         int status = 200;
+        String photoLink = "";
         try {
             byte[] photo = IOUtils.toByteArray( uploadedInputStream );
-            photoService.saveUserPhoto( photo );
+            photoLink = photoService.saveUserPhoto(photo);
 
             status = 200;
         } catch ( IOException e ) {
@@ -63,17 +66,31 @@ public class JsonHandler {
             log.error( "Something happened while saving photo: ", e );
         }
 
+        Act act = new Act(
+                userID,
+                new Alcohol(title,
+                        AlkoCategory.valueOf(category),
+                        Brand.valueOf(title)),
+                getVolume(amount, amountOf),
+                photoLink,
+                new Date());
+        actDao.saveAct(act);
         return Response.status( status ).entity( "хуйпизда" ).build();
+    }
+
+    private double getVolume(Integer amount, String amountOf) {
+        return 1;
     }
 
     @GET
     @Path( "/profile" )
     @Produces( MediaType.APPLICATION_JSON )
     public Response getProfile( @QueryParam( "id" ) Integer id ) {
+        User user = userDao.getUser(id);
         ProfileDto profile = new ProfileDto(
                 "goc0g6uh1an2wik9d3l5rtzn2xdges",
-                "Ivan Ivanov",
-                1000,
+                user.getUsername(),
+                userDao.getDrunkTimes(id),
                 2000,
                 3000,
                 "vodka"
@@ -94,5 +111,7 @@ public class JsonHandler {
                 return Response.status( 500 ).build();
             }
     }
+
+
 
 }
