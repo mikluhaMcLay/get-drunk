@@ -62,19 +62,19 @@ public class UserDao {
                         "  where al.id = ?", new Object[]{userID}, Integer.class);
     }
 
-    public long getDrunkThisWeek(long userID) {
+    public int getDrunkThisWeek(long userID) {
         return jdbcTemplate.queryForObject("select sum(a.volume)\n" +
                 "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
                 "  where al.id = ? and (7*24*60*60 > EXTRACT(EPOCH FROM (current_timestamp - a.ts)))", new Object[]{userID}, Integer.class);
     }
 
-    public long getDrunkAllTime(long userID) {
+    public int getDrunkAllTime(long userID) {
         return jdbcTemplate.queryForObject("select sum(a.volume)\n" +
                 "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
                 "  where al.id = ?", new Object[]{userID}, Integer.class);
     }
 
-    public long getFavouriteDrink(long userID) {
+    public int getFavouriteDrink(long userID) {
         return jdbcTemplate.queryForObject("select a.item, ai.name, count(*) as itemCount\n" +
                 "  from alcoholic al JOIN act a ON (al.id = a.alcoholic)\n" +
                 "    join alcohol_item ai ON (a.item = ai.id)\n" +

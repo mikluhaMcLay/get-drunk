@@ -7,10 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.startup.db.ActDao;
 import org.startup.db.UserDao;
 import org.startup.db.photo.PhotoException;
 import org.startup.db.photo.PhotoService;
 import org.startup.entity.User;
+import org.startup.web.dto.ProfileDto;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -33,6 +35,8 @@ public class JsonHandler {
     private PhotoService photoService;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private ActDao actDao;
 
     @GET
     @Path( "/echo" )
@@ -51,11 +55,13 @@ public class JsonHandler {
                                @FormDataParam( "amount" ) Integer amount,
                                @FormDataParam( "amount_of" ) String amountOf,
                                @FormDataParam( "title" ) String title ) {
+
         int status = 200;
         try {
             byte[] photo = IOUtils.toByteArray( uploadedInputStream );
             photoService.saveUserPhoto( photo );
 
+//            actDao.
             status = 200;
         } catch ( IOException e ) {
             log.error( "Photo wasn't saved: ", e );
@@ -71,17 +77,21 @@ public class JsonHandler {
     @Produces( MediaType.APPLICATION_JSON )
     public Response getProfile( @QueryParam( "id" ) Integer id ) {
         User user = userDao.getUser( id );
-//        ProfileDto profile = new ProfileDto(
-//                user.getPhotoLink(),
-//                user.getUsername(),
-//                user.get,
-//                2000,
-//                3000,
-//                "vodka"
-//        );
-//
-//        return Response.ok( profile ).build();
-        return Response.ok().build();
+        int drinkTimes = userDao.getDrunkTimes( id );
+        int drunkThisWeek = userDao.getDrunkThisWeek( id );
+        int drunkAllTimes = userDao.getDrunkAllTime( id );
+        userDao.getFavouriteDrink( id );
+
+        ProfileDto profile = new ProfileDto(
+                user.getPhotoLink(),
+                user.getUsername(),
+                drinkTimes,
+                drunkThisWeek,
+                drunkAllTimes,
+                user.
+        );
+
+        return Response.ok( profile ).build();
     }
 
     @GET
