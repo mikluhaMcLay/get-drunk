@@ -65,6 +65,11 @@ public class JsonHandler {
                                @FormDataParam( "userId" ) Long userId ) {
         int status = 200;
         try {
+            boolean hasNulls = checkOnNulls( uploadedInputStream, alcoName, brand, category, amount, title,
+                    timestamp, userId );
+            if ( hasNulls ) {
+                return Response.status( 400 ).build();
+            }
             byte[] photo = IOUtils.toByteArray( uploadedInputStream );
             String link = photoService.saveUserPhoto( photo );
 
@@ -89,7 +94,7 @@ public class JsonHandler {
             log.error( "Something happened while saving photo: ", e );
         }
 
-        return Response.status( status ).entity( "хуйпизда" ).build();
+        return Response.status( status ).entity( "success" ).build();
     }
 
 
@@ -131,6 +136,15 @@ public class JsonHandler {
 
     private double somethingToLiter( String something ) {
         return new Random().nextDouble() * 0.7;
+    }
+
+    private boolean checkOnNulls( Object... values ) {
+        for ( Object v : values ) {
+            if ( v == null ) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
