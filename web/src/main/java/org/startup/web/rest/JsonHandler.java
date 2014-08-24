@@ -68,7 +68,7 @@ public class JsonHandler {
             boolean hasNulls = checkOnNulls( uploadedInputStream, alcoName, brand, category, amount, title,
                     timestamp, userId );
             if ( hasNulls ) {
-                return Response.status( 400 ).build();
+                return Response.status( 400 ).entity( "fail" ).build();
             }
             byte[] photo = IOUtils.toByteArray( uploadedInputStream );
             String link = photoService.saveUserPhoto( photo );
